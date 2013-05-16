@@ -33,24 +33,28 @@ namespace RBF_PNN
             dataFile.Close();
 
             // K-means for centroid calculation
-            KMeans kmeans = new KMeans(2);
+
+            int k = 2;
+            KMeans kmeans = new KMeans(k);
             for (int i = 0; i < data.Count; i++)
             {
                 kmeans.AddData(data[i]);
             }
-            kmeans.DoClustering(10);
+            kmeans.DoClustering(100, 0.001);
 
             // build the RBF
-            RBF rbf = new RBF(data.Count, 30, 2, 1);
+            RBF rbf = new RBF(data.Count, 30, k, 1);
             for (int i = 0; i < data.Count; i++)
             {
                 rbf.AddTrainingData(classLabel[i], data[i]);
             }
 
             // center calculated using K-means
-            Matrix rbfCenter = new Matrix(2, 30);
-            rbfCenter.SetRow(0, kmeans.GetCentroid()[0].GetValue());
-            rbfCenter.SetRow(1, kmeans.GetCentroid()[1].GetValue());
+            Matrix rbfCenter = new Matrix(k, 30);
+            for (int i = 0; i < k; i++)
+            {
+                rbfCenter.SetRow(i, kmeans.GetCentroid()[i].GetValue());
+            }
 
             rbf.SetCenter(rbfCenter);
             rbf.Train();

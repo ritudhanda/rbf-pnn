@@ -18,6 +18,11 @@ namespace RBF_PNN
             }
         }
 
+        public Vector(int length)
+        {
+            Value = new double[length];
+        }
+
         public double Get(int index)
         {
             return Value[index];
