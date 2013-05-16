@@ -21,7 +21,7 @@ namespace RBF_PNN
         public void AddData(Vector Data)
         {
             this.Data.Add(Data);
-            this.Dim = Data.Length();
+            this.Dim = Data.Length;
         }
 
         private void InitCentroid()
@@ -48,7 +48,7 @@ namespace RBF_PNN
             double sum = 0.0;
             for (int i = 0; i < Dim; i++)
             {
-                sum = sum + Math.Pow((Data[dataIndex].Get(i) - Centroid[centroidIndex].Get(i)), 2);
+                sum = sum + Math.Pow((Data[dataIndex][i] - Centroid[centroidIndex][i]), 2);
             }
             return Math.Sqrt(sum);
         }
@@ -88,7 +88,7 @@ namespace RBF_PNN
             {
                 for (int j = 0; j < Dim; j++)
                 {
-                    Centroid[i].Set(j, 0.0);
+                    Centroid[i][j] = 0.0;
                 }
             }
 
@@ -97,8 +97,7 @@ namespace RBF_PNN
                 indexCount[indexArray[i]]++;
                 for (int j = 0; j < Dim; j++)
                 {
-                    double newVal = Centroid[indexArray[i]].Get(j) + Data[i].Get(j);
-                    Centroid[indexArray[i]].Set(j, newVal);
+                    Centroid[indexArray[i]][j] = Centroid[indexArray[i]][j] + Data[i][j];
                 }
             }
             
@@ -108,14 +107,12 @@ namespace RBF_PNN
                 {
                     for (int j = 0; j < Dim; j++)
                     {
-                        double newVal = Centroid[i].Get(j) / (double)indexCount[i];
-                        Centroid[i].Set(j, newVal);
+                        Centroid[i][j] = Centroid[i][j] / (double)indexCount[i];
                     }
                 } else {
                     for (int j = 0; j < Dim; j++)
                     {
-                        double newVal = r.NextDouble();
-                        Centroid[i].Set(j, newVal);
+                        Centroid[i][j] = r.NextDouble();
                     }                    
                 }
             }
@@ -135,8 +132,7 @@ namespace RBF_PNN
                     prevCentroid.Add(new Vector(Dim));
                     for (int b = 0; b < Dim; b++)
                     {
-                        double cVal = Centroid[a].Get(b);
-                        prevCentroid[a].Set(b, cVal);
+                        prevCentroid[a][b] = Centroid[a][b];
                     }
                 }
 
@@ -146,8 +142,7 @@ namespace RBF_PNN
                     currCentroid.Add(new Vector(Dim));
                     for (int b = 0; b < Dim; b++)
                     {
-                        double cVal = Centroid[a].Get(b);
-                        currCentroid[a].Set(b, cVal);
+                        currCentroid[a][b] = Centroid[a][b];
                     }
                 }
 

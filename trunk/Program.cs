@@ -53,7 +53,7 @@ namespace RBF_PNN
             Matrix rbfCenter = new Matrix(k, 30);
             for (int i = 0; i < k; i++)
             {
-                rbfCenter.SetRow(i, kmeans.GetCentroid()[i].GetValue());
+                rbfCenter.SetRow(i, kmeans.GetCentroid()[i].GetValueArray());
             }
 
             rbf.SetCenter(rbfCenter);
