@@ -54,9 +54,9 @@ namespace RBF_PNN
             // Vector to matrices
             for (int i = 0; i < TrainingData.Count; i++)
             {
-                for (int j = 0; j < TrainingData[i].Length(); j++)
+                for (int j = 0; j < TrainingData[i].Length; j++)
                 {
-                    DataMatrix[i, j] = TrainingData[i].Get(j);
+                    DataMatrix[i, j] = TrainingData[i][j];
                 }
                 TargetMatrix[i, 0] = TargetData[i];
             }

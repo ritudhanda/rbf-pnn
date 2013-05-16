@@ -8,6 +8,13 @@ namespace RBF_PNN
     class Vector
     {
         private double[] Value;
+        public int Length {
+            get { return Value.Length; }
+        }
+        public double this[int index] {
+            get { return Value[index]; }
+            set { Value[index] = value; } 
+        }
 
         public Vector(params double[] InValue)
         {
@@ -33,43 +40,38 @@ namespace RBF_PNN
             this.Value[index] = Value;
         }
 
-        public double[] GetValue()
+        public double[] GetValueArray()
         {
             return Value;
         }
 
-        public int Length()
-        {
-            return Value.Length;
-        }
-
         public static Vector operator +(Vector V1, Vector V2)
         {
-            if (V1.Length() != V2.Length()) throw new Exception("Vector dimension mismatch!");
-            double[] Temp = new double[V1.Length()];
-            for (int i = 0; i < V1.Length(); i++)
+            if (V1.Length != V2.Length) throw new Exception("Vector dimension mismatch!");
+            double[] Temp = new double[V1.Length];
+            for (int i = 0; i < V1.Length; i++)
             {
-                Temp[i] = V1.Get(i) + V2.Get(i);
+                Temp[i] = V1[i] + V2[i];
             }
             return new Vector(Temp);
         }
 
         public static Vector operator -(Vector V1, Vector V2)
         {
-            if (V1.Length() != V2.Length()) throw new Exception("Vector dimension mismatch!");
-            double[] Temp = new double[V1.Length()];
-            for (int i = 0; i < V1.Length(); i++)
+            if (V1.Length != V2.Length) throw new Exception("Vector dimension mismatch!");
+            double[] Temp = new double[V1.Length];
+            for (int i = 0; i < V1.Length; i++)
             {
-                Temp[i] = V1.Get(i) - V2.Get(i);
+                Temp[i] = V1[i] - V2[i];
             }
             return new Vector(Temp);
         }
 
         public static Vector operator *(Vector V, double S)
         {
-            for (int i = 0; i < V.Length(); i++)
+            for (int i = 0; i < V.Length; i++)
             {
-                V.Set(i, V.Get(i) * S);
+                V[i] = V[i] * S;
             }
             return V;
         }
@@ -87,11 +89,11 @@ namespace RBF_PNN
 
         public double Dot(Vector V)
         {
-            if (this.Length() != V.Length()) throw new Exception("Vector dimension mismatch!");
+            if (this.Length != V.Length) throw new Exception("Vector dimension mismatch!");
             double sum = 0.0;
-            for (int i = 0; i < this.Length(); i++)
+            for (int i = 0; i < this.Length; i++)
             {
-                sum += Value[i] * V.Get(i);
+                sum += Value[i] * V[i];
             }
             return sum;
         }
