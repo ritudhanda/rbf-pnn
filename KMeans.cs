@@ -121,13 +121,44 @@ namespace RBF_PNN
             }
         }
 
-        public void DoClustering(int maxIter)
+        public void DoClustering(int maxIter, double diffThreshold)
         {
             InitCentroid();
 
             for (int i = 0; i < maxIter; i++)
             {
+                List<Vector> prevCentroid = new List<Vector>();
+                List<Vector> currCentroid = new List<Vector>();
+
+                for (int a = 0; a < K; a++)
+                {
+                    prevCentroid.Add(new Vector(Dim));
+                    for (int b = 0; b < Dim; b++)
+                    {
+                        double cVal = Centroid[a].Get(b);
+                        prevCentroid[a].Set(b, cVal);
+                    }
+                }
+
                 RecalculateCentroid();
+                for (int a = 0; a < K; a++)
+                {
+                    currCentroid.Add(new Vector(Dim));
+                    for (int b = 0; b < Dim; b++)
+                    {
+                        double cVal = Centroid[a].Get(b);
+                        currCentroid[a].Set(b, cVal);
+                    }
+                }
+
+                double diffSum = 0.0;
+                for (int j = 0; j < K; j++)
+                {
+                    double diff = (currCentroid[j] - prevCentroid[j]).Norm();
+                    diffSum += diff;
+                }
+
+                if (diffSum <= diffThreshold) break;
             }
         }
 
