@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfusionMatrix.cs" />
+    <Compile Include="KMeans.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="PNN.cs" />
     <Compile Include="RBF.cs" />
